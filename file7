@@ -1,0 +1,21 @@
+sudo yum install docker -y
+sudo systemctl start docker 
+sudo systemctl enable docker
+sudo usermod -aG docker ec2-user
+docker ps
+sudo useradd dockeradmin
+sudo passwd dockeradmin
+sudo usermod -aG docker dockeradmin
+groups dockeradmin
+sudo nano /etc/ssh/sshd_config
+ssh dockeradmin@dockerinstance ip
+nano Dockerfile
+RUN cp -R /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps/
+COPY helloworld.war /usr/local/tomcat/webapps/
+exit 
+docker pull tomcat
+docker images
+docker ps
+docker run -d --name tomcat-container -p 8080:8081 tomcat
+docker ps -a 
+docker rm -f tomcat-container
