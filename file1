@@ -64,3 +64,12 @@ logout
 home
 sudo cp /home/ec2-user/helloworld/target/helloworld.war /opt/tomcat/webapps/
 4)$ sudo cp helloworld.war /opt/tomcat/webapps/
+---------JENKINS--------------------
+Execute the following commands
+a. sudo su
+b. wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhatstable/jenkins.repo
+c. rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+d. sudo yum upgrade
+e. yum install jenkins -y
+f. systemctl enable Jenkins
+g. systemctl start Jenkins
