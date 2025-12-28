@@ -1,0 +1,75 @@
+$sudo yum update
+$sudo nano /etc/hostname
+$sudo init 6
+$sudo yum install git -y
+--installing java--
+1)$ sudo yum install java-17-amazon-corretto-devel
+2)$ java -version
+3)$ which java
+4)$ javac -version
+5)$ readlink /etc/alternative/java
+6)$ readlink -f $(which java)
+7)$ cd
+8)$ vi .bashrc
+	export JAVA_HOME='/usr/lib/jvm/java-17-amazon-corretto.x86_64/'
+9)$ source .bashrc
+10)$ sudo su -
+11)# vi .bashrc
+	export JAVA_HOME='/usr/lib/jvm/java-17-amazon-corretto.x86_64/'
+12)# source .bashrc
+13)# printenv | grep "java"
+---Tomcat installation---
+1)# cd /opt
+2)# wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.109/bin/apache-tomcat-9.0.109.tar.gz
+3)# tar -xvzf apache-tomcat-9.0.109.tar.gz
+4)# mv apache-tomcat-9.0.109.tar.gz tomcat
+5)# cd tomcat/bin
+6)# ln -s /opt/tomcat/bin/shutdown.sh /usr/bin/tomcat-stop
+7)# ln -s /opt/tomcat/bin/startup.sh /usr/bin/tomcat-start
+8)# tomcat-start
+9)# tomcat-stop
+10)# cd /opt/tomcat
+11)# find . -name context.xml
+12)# cd ./webapps/host-manager/META-INF
+13)# vi context.xml
+	delete valve attribute
+14)# cd /opt/tomcat
+15)# cd conf
+16)# vi server.xml
+	change port number 8080to 8090
+17)# tomcat-start
+go to browser and paste http://publicip of instance:8080/
+---maven installation---
+1)# cd /opt/tomcat
+2)# wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
+                                   or
+wget https://repo1.maven.org/maven2/org/apache/maven/apache-maven/3.9.11/apache-maven-3.9.11-bin.tar.gz
+3)# tar -xvzf apache-maven-3.9.11-bin.tar.gz
+4)# mv apache-maven-3.9.11 maven
+5)# cd maven/bin
+6)# ./mvn -version
+7)# nano .bashrc
+	export M2_HOME='opt/maven'
+	export PATH=$PATH:/opt/maven/bin
+8)# source .bashrc
+logout
+7)$ nano .bashrc
+	export M2_HOME='/opt/maven'
+	export PATH=$PATH:/opt/maven/bin
+8)$ source .bashrc
+---creating web application----
+1)$ mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=1.4 -DgroupId=com.helloworld -DartifactId=helloworld -DinteractiveMode=false -U
+2)$ mvn clean install
+3)$ cd helloworld/target
+home
+sudo cp /home/ec2-user/helloworld/target/helloworld.war /opt/tomcat/webapps/
+4)$ sudo cp helloworld.war /opt/tomcat/webapps/
+---------JENKINS--------------------
+Execute the following commands
+a. sudo su
+b. wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhatstable/jenkins.repo
+c. rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+d. sudo yum upgrade
+e. yum install jenkins -y
+f. systemctl enable Jenkins
+g. systemctl start Jenkins
